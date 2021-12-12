@@ -4,6 +4,7 @@ import com.foodmarket.fastfoodservice.domain.Category;
 import com.foodmarket.fastfoodservice.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -36,6 +37,7 @@ public class CategoryService {
         return categoryRepository.findAll();
     }
 
+    @Transactional
     public Category findById(Long id) {
         return categoryRepository.findById(id).get();
     }
@@ -53,7 +55,7 @@ public class CategoryService {
         categoryRepository.delete(category);
     }
 
-    public Category update(Long id, String hash, String name, MultipartFile multipartFile) {
+    public Category update(Long id, String name, String hash, MultipartFile multipartFile) {
         Optional<Category> existingCategoryOptional = categoryRepository.findById(id);
         Category existingCategory;
         if (existingCategoryOptional.isPresent()) {

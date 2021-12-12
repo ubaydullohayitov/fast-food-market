@@ -1,5 +1,6 @@
 package com.foodmarket.fastfoodservice.service;
 
+import com.foodmarket.fastfoodservice.domain.Category;
 import com.foodmarket.fastfoodservice.domain.Food;
 import com.foodmarket.fastfoodservice.repository.FoodRepository;
 import org.springframework.stereotype.Service;
@@ -11,10 +12,12 @@ import java.util.Optional;
 
 @Service
 public class FoodService implements Serializable {
+    private final CategoryService categoryService;
     private final FoodRepository foodRepository;
     private final FileStorageImageService fileStorageImageService;
 
-    public FoodService(FoodRepository foodRepository, FileStorageImageService fileStorageImageService) {
+    public FoodService(CategoryService categoryService, FoodRepository foodRepository, FileStorageImageService fileStorageImageService) {
+        this.categoryService = categoryService;
         this.foodRepository = foodRepository;
         this.fileStorageImageService = fileStorageImageService;
     }
@@ -22,6 +25,7 @@ public class FoodService implements Serializable {
     public Food save(String name,
                      Double price,
                      Double rating,
+                     Long categoryId,
                      MultipartFile multipartFile) {
 
         String imageFileHashId = fileStorageImageService.saveImageFile(multipartFile);
@@ -29,6 +33,8 @@ public class FoodService implements Serializable {
         food.setName(name);
         food.setPrice(price);
         food.setRating(rating);
+        Category category = categoryService.findById(categoryId);
+        food.setCategory(category);
         food.setImageUrl(imageFileHashId);
 
         return foodRepository.save(food);

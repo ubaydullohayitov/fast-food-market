@@ -20,7 +20,7 @@ public class Food implements Serializable {
 
     private Double rating;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Category category;
 
     public Long getId() {

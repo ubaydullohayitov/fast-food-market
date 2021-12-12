@@ -22,8 +22,9 @@ public class FoodResource {
     public ResponseEntity create(@RequestParam String name,
                                  @RequestParam Double price,
                                  @RequestParam Double rating,
+                                 @RequestParam Long categoryId,
                                  @RequestPart("image") MultipartFile multipartFile) {
-        Food food1 = foodService.save(name, price, rating, multipartFile);
+        Food food1 = foodService.save(name, price, rating, categoryId, multipartFile);
         return ResponseEntity.ok(food1);
     }
 
