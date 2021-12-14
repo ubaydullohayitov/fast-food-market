@@ -64,7 +64,6 @@ public class JwtTokenProvider {
             return false;
         }
         return true;
-
     }
 
     public String resolveToken(HttpServletRequest request) {
@@ -74,7 +73,6 @@ public class JwtTokenProvider {
         }
         return null;
     }
-
 
     public Authentication getAuthentication(String token) {
         UserDetails userDetails = this.userDetailsService.loadUserByUsername(getUser(token));

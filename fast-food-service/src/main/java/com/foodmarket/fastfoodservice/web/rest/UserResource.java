@@ -31,11 +31,16 @@ public class UserResource {
     private Boolean checkPasswordLength(String password) {
         return password.length() >= 6;
     }
+
     @DeleteMapping("/register/{id}")
-    public ResponseEntity delete(@PathVariable Long id){
+    public ResponseEntity delete(@PathVariable Long id) {
         userService.delete(id);
         return ResponseEntity.ok("Kiritilgan yuzer o'chirildi");
     }
 
-
+    @PutMapping("/user")
+    public ResponseEntity updateUser(@RequestBody User user) {
+        User updatedUser = userService.update(user);
+        return ResponseEntity.ok(updatedUser);
+    }
 }
